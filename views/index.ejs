@@ -21,7 +21,7 @@
         <button type="submit" class="btn">Check Price</button>
       </form><br>
     
-    <% if(locals.content){ %>
+    <% if(content){ %>
         <h3 class="data"><span style="font-weight:bold">Cryptocurrency Name :</span> <span style="font-weight:bold;color: rgba(5, 34, 33, 0.959);"><%=cryptoName%></span></h3>                   
         <h3 class="data"><span style="font-weight:bold">Current Price : </span><span style="font-weight:bold;color: rgba(5, 34, 33, 0.959);"><%=content%></span></h3>                            
         <h3 class="data"><span style="font-weight:bold">24H Change : </span><span style="font-weight:bold;color: rgba(5, 34, 33, 0.959);"><%=percentage%> </span></h3>                                     
@@ -38,6 +38,6 @@
         
         
         <%- include("partials/footer.ejs") %>
-        <script src="/script.js"></script>
         </body>
+
 </html>
