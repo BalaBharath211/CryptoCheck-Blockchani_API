@@ -1,43 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Block Chain API</title>
-    <link rel="stylesheet" href="styles/main.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Block Chain API</title>
+
+  <link rel="stylesheet" href="styles/main.css">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
 </head>
+
 <body>
-    <%- include('partials/header.ejs') %>
-    <div class="hero">
+  <%- include('partials/header.ejs') %>
+
+  <div class="hero">
     <div class="her2">
+
       <h1 class="head">LIVE CRYPTOCURRENCY PRICES</h1>
-      <h3 class="head">Check the latest cryptocurrency prices and market caps before you buy.</h3><br><br>
-      <h5 class="head2">👇Enter Cryptocurrency Symbol</h1>
+      <h3 class="head">Check the latest cryptocurrency prices and market caps before you buy.</h3>
+      <br><br>
 
-      <form action="/check-price" method="POST">
-        <label for="cryptoSymbol" class="cryptoSymbol"></label>
-        <input type="text" id="cryptoSymbol" placeholder="e.g., BTC-USD" name="cryptoSymbol" required>
-        <button type="submit" class="btn">Check Price</button>
-      </form><br>
-    
-    <% if(content){ %>
-        <h3 class="data"><span style="font-weight:bold">Cryptocurrency Name :</span> <span style="font-weight:bold;color: rgba(5, 34, 33, 0.959);"><%=cryptoName%></span></h3>                   
-        <h3 class="data"><span style="font-weight:bold">Current Price : </span><span style="font-weight:bold;color: rgba(5, 34, 33, 0.959);"><%=content%></span></h3>                            
-        <h3 class="data"><span style="font-weight:bold">24H Change : </span><span style="font-weight:bold;color: rgba(5, 34, 33, 0.959);"><%=percentage%> </span></h3>                                     
-        <h3 class="data"><span style="font-weight:bold">24H Volume : </span><span style="font-weight:bold; color: rgba(5, 34, 33, 0.959);"><%=volume%></span></h3>                                  
-        <h3 class="data"><span style="font-weight:bold">Market Cap : </span><span style="font-weight:bold; color: rgba(5, 34, 33, 0.959);"><%=MarketCap%> </span></h3>
-        
-        <% } else { %>
-            
-            <% } %>
-           
-        </div>
-        </div>
-        </div>
-        
-        
-        <%- include("partials/footer.ejs") %>
-        </body>
+      <h5 class="head2">👇 Select Cryptocurrency</h5>
 
+    <form action="/check-price" method="POST">
+
+        <input
+          type="text"
+          name="cryptoSymbol"
+          list="cryptoList"
+          class="form-control mb-3"
+          placeholder="Type or select crypto (e.g. BTC-USD)"
+          required
+        >
+
+        <datalist id="cryptoList">
+          <% symbols.forEach(symbol => { %>
+            <option value="<%= symbol %>">
+          <% }) %>
+        </datalist>
+
+        <button type="submit" class="btn btn-danger">
+          Check Price
+        </button>
+
+      </form>
+
+      <br>
+
+      <% if (content) { %>
+        <h3 class="data"><strong>Cryptocurrency Name:</strong> <%= cryptoName %></h3>
+        <h3 class="data"><strong>Current Price:</strong> <%= content %></h3>
+        <h3 class="data"><strong>24H Change:</strong> <%= percentage %></h3>
+        <h3 class="data"><strong>24H Volume:</strong> <%= volume %></h3>
+        <h3 class="data"><strong>Market Cap:</strong> <%= MarketCap %></h3>
+      <% } %>
+
+    </div>
+  </div>
+    <script>
+      function filterSymbols(query) {
+        const select = document.getElementById("cryptoSelect");
+        const options = select.options;
+        query = query.toUpperCase();
+
+        for (let i = 0; i < options.length; i++) {
+          const text = options[i].text.toUpperCase();
+          options[i].style.display = text.includes(query) ? "" : "none";
+        }
+      }
+    </script>
+
+  <%- include('partials/footer.ejs') %>
+</body>
 </html>
